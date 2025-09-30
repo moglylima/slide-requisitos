@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elicitação de Requisitos - GoodSystem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Calibri', sans-serif;
+            background: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            width: 960px;
+            height: 720px;
+            margin: 20px auto;
+            background: white;
+            padding: 40px 60px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            page-break-after: always;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #0066cc;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0066cc, #00cc66);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .header-text h3 {
+            color: #0066cc;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .header-text p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 60px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        h1 {
+            color: #0066cc;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #0066cc;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #00cc66;
+            font-size: 22px;
+            margin: 15px 0 10px 0;
+        }
+
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin-left: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #0066cc;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .team-table {
+            font-size: 16px;
+        }
+
+        .diagram {
+            background: #f0f8ff;
+            border: 2px solid #0066cc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 150px solid #00cc66;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+
+        .triangle-text {
+            position: absolute;
+            width: 200px;
+            left: -100px;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .success-factors {
+            background: #fffacd;
+            border-left: 4px solid #ffd700;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .quote-box {
+            background: #fff0f0;
+            border-left: 4px solid #ff6666;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            font-size: 16px;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .icon-interview {
+            background: #e3f2fd;
+            color: #0066cc;
+        }
+
+        .icon-survey {
+            background: #e8f5e9;
+            color: #00cc66;
+        }
+
+        .icon-observation {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .highlight {
+            background: #fffacd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .footer-note {
+            font-size: 12px;
+            color: #999;
+            font-style: italic;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Título -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Universidade Federal do Ceará - Campus Quixadá</h3>
+            <p>Requisitos de Software | 2025.2 | Profa. Diana Braga</p>
+        </div>
+    </div>
+    <div class="content">
+        <h1 style="margin-top: 80px;">Atividade 1<br>Elicitação de Requisitos</h1>
+        <h2 style="text-align: center; color: #00cc66; margin-top: 30px;">GoodSystem Requirements Analyzer</h2>
+        <p style="text-align: center; font-size: 20px; margin-top: 20px;"><strong>Setor:</strong> Transformação Digital e Desenvolvimento de Sistemas</p>
+        
+        <table class="team-table" style="margin-top: 40px;">
+            <tr>
+                <th>Equipe</th>
+                <th>Matrícula</th>
+            </tr>
+            <tr>
+                <td>Elixandre da Silveira Silva Filho</td>
+                <td>478164</td>
+            </tr>
+            <tr>
+                <td>Mogleson de Lima Maciel</td>
+                <td>570402</td>
+            </tr>
+            <tr>
+                <td>Cleuvya Vitória O. dos Santos</td>
+                <td>555436</td>
+            </tr>
+            <tr>
+                <td>Francisco Pedro Mota Braga Carneiro</td>
+                <td>582623</td>
+            </tr>
+            <tr>
+                <td>Amanda Silva de Oliveira</td>
+                <td>555298</td>
+            </tr>
+        </table>
+    </div>
+    <div class="slide-number">1</div>
+</div>
+
+<!-- Slide 2: Contexto -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2>1. Contexto</h2>
+        
+        <ul>
+            <li><strong>JIT Technology:</strong> Atua em transformação digital e desenvolvimento de soluções customizadas</li>
+            <li><strong>Desafio:</strong> Levantamento de requisitos comprometido por falhas de comunicação e mudanças de escopo</li>
+            <li><strong>GoodSystem:</strong> Equipe acadêmica de análise parceira para elicitação de requisitos</li>
+        </ul>
+
+        <div class="diagram">
+            <h3 style="color: #0066cc;">Objetivo Geral da Elicitação</h3>
+            <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #0066cc; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: bold;">Explorar<br>Soluções</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #00cc66; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: bold;">Identificar<br>Stakeholders</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #ff9800; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: bold;">Entender<br>Necessidades</div>
+                </div>
+            </div>
+            <p style="font-size: 14px; color: #666;">Insucessos podem ser originados de qualquer desses passos fundamentais</p>
+        </div>
+
+        <div class="success-factors">
+            <strong>Fatores de Sucesso:</strong> Colaboração, Ambiente adequado e Vocabulário comum
+        </div>
+    </div>
+    <div class="slide-number">2</div>
+</div>
+
+<!-- Slide 3: Posicionamento do Problema -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2>2. Posicionamento do Problema</h2>
+        
+        <table>
+            <tr>
+                <th style="width: 30%;">Aspecto</th>
+                <th>Descrição</th>
+            </tr>
+            <tr>
+                <td><strong>O Problema de:</strong></td>
+                <td>Falhas na coleta e gestão de requisitos em projetos de software, que impactam prazos, escopo e qualidade</td>
+            </tr>
+            <tr>
+                <td><strong>Afeta:</strong></td>
+                <td>Desenvolvedores, líderes de projeto e clientes da JIT Technology</td>
+            </tr>
+            <tr>
+                <td><strong>Cujo impacto é:</strong></td>
+                <td>Retrabalho, perda de tempo, insatisfação do cliente e baixa eficiência nos processos</td>
+            </tr>
+            <tr>
+                <td><strong>Uma boa solução seria:</strong></td>
+                <td>Melhorar a elicitação de requisitos, ter rastreabilidade das mudanças, centralizar a comunicação e automatizar relatórios</td>
+            </tr>
+        </table>
+
+        <div class="quote-box">
+            "Se você não ouviu, ainda vai ouvir..." 
+            <br>💬 "Mas não era isso que eu pedi!"
+            <br>💬 "Pensei que já estivesse pronto..."
+            <br>💬 "Mudou tudo de novo!"
+        </div>
+    </div>
+    <div class="slide-number">3</div>
+</div>
+
+<!-- Slide 4: Posicionamento do Produto -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2>2. Posicionamento do Produto</h2>
+        
+        <table>
+            <tr>
+                <th style="width: 30%;">Aspecto</th>
+                <th>Descrição</th>
+            </tr>
+            <tr>
+                <td><strong>Para:</strong></td>
+                <td>Equipes de desenvolvimento e gestão de projetos da JIT Technology</td>
+            </tr>
+            <tr>
+                <td><strong>Que:</strong></td>
+                <td>Precisam de processos mais claros e eficientes na coleta e rastreamento de requisitos</td>
+            </tr>
+            <tr>
+                <td><strong>O:</strong></td>
+                <td><span class="highlight">GoodSystem Requirements Analyzer</span></td>
+            </tr>
+            <tr>
+                <td><strong>É um:</strong></td>
+                <td>Ferramenta de apoio à elicitação e análise de requisitos</td>
+            </tr>
+            <tr>
+                <td><strong>Que:</strong></td>
+                <td>Reduz falhas de comunicação, otimiza processos e proporciona maior clareza aos stakeholders</td>
+            </tr>
+            <tr>
+                <td><strong>Ao contrário de:</strong></td>
+                <td>Métodos informais e pouco documentados, que dificultam a rastreabilidade</td>
+            </tr>
+            <tr>
+                <td><strong>Nossa solução:</strong></td>
+                <td>Oferece estrutura organizada de requisitos, relatórios automatizados e integração com processos de gestão existentes</td>
+            </tr>
+        </table>
+    </div>
+    <div class="slide-number">4</div>
+</div>
+
+<!-- Slide 5: Técnica 1 - Entrevista -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2><span class="icon icon-interview">🎤</span>Técnica 1: Entrevista</h2>
+        
+        <h3>Objetivo Geral</h3>
+        <p>Identificar dificuldades, necessidades e expectativas sobre os processos de requisitos na JIT Technology</p>
+
+        <h3>Estrutura</h3>
+        <ul>
+            <li><strong>Formato:</strong> Online/presencial</li>
+            <li><strong>Participantes:</strong> 1 líder de projeto + 2 desenvolvedores</li>
+            <li><strong>Duração:</strong> 45-60 minutos</li>
+        </ul>
+
+        <h3>Roteiro - 5 Perguntas Abertas</h3>
+        <ol style="font-size: 15px; line-height: 1.5;">
+            <li><strong>Quais desafios você encontra atualmente na comunicação entre equipe e cliente?</strong>
+                <br><span style="font-size: 13px; color: #666;">→ Identificar falhas de comunicação | Requisito não funcional/regra de negócio</span>
+            </li>
+            <li><strong>Como os requisitos são validados durante o ciclo do projeto?</strong>
+                <br><span style="font-size: 13px; color: #666;">→ Entender processo de validação | Requisito funcional/processo</span>
+            </li>
+            <li><strong>Existem dificuldades em manter rastreabilidade das demandas?</strong>
+                <br><span style="font-size: 13px; color: #666;">→ Verificar necessidade de rastreamento | Requisito funcional/usabilidade</span>
+            </li>
+            <li><strong>Quais ferramentas vocês mais utilizam no dia a dia? E o que sentem falta nelas?</strong>
+                <br><span style="font-size: 13px; color: #666;">→ Levantar integrações necessárias | Requisito funcional</span>
+            </li>
+            <li><strong>Se pudesse melhorar somente um aspecto no sistema atual, qual seria?</strong>
+                <br><span style="font-size: 13px; color: #666;">→ Mapear prioridade de melhoria | Requisito funcional/não funcional</span>
+            </li>
+        </ol>
+    </div>
+    <div class="slide-number">5</div>
+</div>
+
+<!-- Slide 6: Técnica 2 - Questionário -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2><span class="icon icon-survey">📊</span>Técnica 2: Questionário</h2>
+        
+        <h3>Objetivo Geral</h3>
+        <p>Coletar dados quantitativos e qualitativos para complementar a entrevista</p>
+
+        <h3>Estrutura</h3>
+        <ul>
+            <li><strong>Plataforma:</strong> Google Forms</li>
+            <li><strong>Participantes:</strong> Desenvolvedores e líder de projeto</li>
+            <li><strong>Tempo estimado:</strong> 10-15 minutos</li>
+        </ul>
+
+        <h3>Composição do Questionário</h3>
+        
+        <div style="background: #e3f2fd; padding: 12px; border-radius: 8px; margin: 10px 0;">
+            <strong style="color: #0066cc;">📋 5 Perguntas Fechadas:</strong>
+            <ol style="font-size: 14px; margin-top: 8px; line-height: 1.4;">
+                <li>Em uma escala de 1 a 5, quão satisfeito você está com os processos atuais de coleta de requisitos?</li>
+                <li>Qual a maior dificuldade enfrentada? (Comunicação / Escopo / Prazos / Ferramentas / Outro)</li>
+                <li>As ferramentas atuais atendem plenamente às necessidades? (Sim / Parcialmente / Não)</li>
+                <li>Em relação à documentação dos requisitos, você classificaria como: (clara / parcialmente clara / pouco clara / inexistente)</li>
+                <li>Em uma escala de 1 a 5, qual a importância de relatórios automatizados de andamento?</li>
+            </ol>
+        </div>
+
+        <div style="background: #e8f5e9; padding: 12px; border-radius: 8px; margin: 10px 0;">
+            <strong style="color: #00cc66;">✍️ 3 Perguntas Abertas:</strong>
+            <ol style="font-size: 14px; margin-top: 8px; line-height: 1.4;">
+                <li>Quais melhorias você considera essenciais para otimizar a gestão de projetos da JIT?</li>
+                <li>Existe algum recurso ou integração que gostaria de ver implementado?</li>
+                <li>Como a tecnologia poderia apoiar melhor o trabalho da sua equipe no futuro?</li>
+            </ol>
+        </div>
+    </div>
+    <div class="slide-number">6</div>
+</div>
+
+<!-- Slide 7: Técnica 3 - Análise/Observação -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2><span class="icon icon-observation">🔍</span>Técnica 3: Análise de Sistema (Observação)</h2>
+        
+        <h3>Objetivo Geral</h3>
+        <p>Verificar como os sistemas são usados, identificando funcionalidades eficazes e falhas operacionais</p>
+
+        <h3>Estrutura</h3>
+        <ul>
+            <li><strong>Método:</strong> Observação do funcionamento atual dos sistemas da JIT</li>
+            <li><strong>Foco:</strong> Dashboards, ferramentas de gestão, comunicação com cliente</li>
+            <li><strong>Duração:</strong> 1-2 horas por sessão (mínimo 2 sessões)</li>
+            <li><strong>Equipe:</strong> GoodSystem + informações dos desenvolvedores</li>
+        </ul>
+
+        <h3>Aplicação Prática</h3>
+        <ul>
+            <li>Acompanhamento de fluxo de requisitos em ferramenta atual</li>
+            <li>Registro de pontos fortes e dificuldades percebidas</li>
+            <li>Identificação de lacunas: necessário vs. oferecido</li>
+            <li>Documentação via notas, screenshots e relatórios descritivos</li>
+        </ul>
+
+        <h3>Resultados Esperados</h3>
+        <p>✓ Requisitos funcionais (funcionalidades inexistentes)<br>
+        ✓ Requisitos de usabilidade (clareza, facilidade)<br>
+        ✓ Restrições de negócio (compatibilidade)</p>
+    </div>
+    <div class="slide-number">7</div>
+</div>
+
+<!-- Slide 8: Comparativo das Técnicas -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Síntese das Técnicas de Elicitação</h2>
+        
+        <table style="font-size: 15px;">
+            <tr>
+                <th>Técnica</th>
+                <th>Tipo de Dados</th>
+                <th>Principal Vantagem</th>
+            </tr>
+            <tr>
+                <td><strong>🎤 Entrevista</strong></td>
+                <td>Qualitativos profundos</td>
+                <td>Compreensão detalhada das dores e expectativas</td>
+            </tr>
+            <tr>
+                <td><strong>📊 Questionário</strong></td>
+                <td>Quantitativos + qualitativos</td>
+                <td>Métricas objetivas e visões amplas</td>
+            </tr>
+            <tr>
+                <td><strong>🔍 Observação</strong></td>
+                <td>Práticos/operacionais</td>
+                <td>Identificação de gaps entre real e ideal</td>
+            </tr>
+        </table>
+
+        <div style="background: #f0f8ff; border: 2px solid #0066cc; border-radius: 10px; padding: 20px; margin-top: 20px;">
+            <h3 style="color: #0066cc; text-align: center;">Abordagem Complementar</h3>
+            <p style="text-align: center;">A combinação das três técnicas permite:</p>
+            <ul style="margin-top: 10px;">
+                <li><strong>Triangulação de dados:</strong> Validação cruzada das informações</li>
+                <li><strong>Cobertura completa:</strong> Aspectos subjetivos, objetivos e práticos</li>
+                <li><strong>Redução de vieses:</strong> Diferentes perspectivas sobre o mesmo problema</li>
+            </ul>
+        </div>
+
+        <p class="footer-note">Adaptado dos materiais da disciplina: Elicitação - Partes 1 e 2</p>
+    </div>
+    <div class="slide-number">8</div>
+</div>
+
+<!-- Slide 9: Conclusão -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Conclusão e Próximos Passos</h2>
+        
+        <h3>Aprendizados da Elicitação</h3>
+        <ul>
+            <li>Importância de múltiplas técnicas para capturar diferentes dimensões do problema</li>
+            <li>Necessidade de estruturação clara para evitar retrabalho e falhas de comunicação</li>
+            <li>Valor da rastreabilidade desde as etapas iniciais do projeto</li>
+        </ul>
+
+        <h3>Benefícios para a JIT Technology</h3>
+        <div style="display: flex; gap: 15px; margin: 20px 0;">
+            <div style="flex: 1; background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                <strong style="color: #0066cc;">Redução de Retrabalho</strong>
+                <p style="font-size: 15px; margin-top: 8px;">Requisitos claros desde o início</p>
+            </div>
+            <div style="flex: 1; background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+                <strong style="color: #00cc66;">Maior Eficiência</strong>
+                <p style="font-size: 15px; margin-top: 8px;">Processos otimizados e documentados</p>
+            </div>
+            <div style="flex: 1; background: #fff3e0; padding: 15px; border-radius: 8px; text-align: center;">
+                <strong style="color: #ff9800;">Satisfação do Cliente</strong>
+                <p style="font-size: 15px; margin-top: 8px;">Entregas alinhadas às expectativas</p>
+            </div>
+        </div>
+
+        <h3>Próximas Etapas</h3>
+        <ol>
+            <li>Aplicação prática das técnicas de elicitação</li>
+            <li>Consolidação e priorização dos requisitos coletados</li>
+            <li>Validação com stakeholders da JIT Technology</li>
+            <li>Desenvolvimento de protótipo do GoodSystem Requirements Analyzer</li>
+        </ol>
+    </div>
+    <div class="slide-number">9</div>
+</div>
+
+<!-- Slide 10: Referências -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">UFC</div>
+        <div class="header-text">
+            <h3>Requisitos de Software | 2025.2</h3>
+            <p>GoodSystem Requirements Analyzer</p>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Referências e Agradecimentos</h2>
+        
+        <h3>Materiais de Referência</h3>
+        <ul style="font-size: 17px;">
+            <li>BRAGA, Diana. <strong>Elicitação de Requisitos - Parte 1</strong>. Slides da disciplina Requisitos de Software, UFC Quixadá, 2025.2</li>
+            <li>BRAGA, Diana. <strong>Elicitação de Requisitos - Parte 2</strong>. Slides da disciplina Requisitos de Software, UFC Quixadá, 2025.2</li>
+            <li>Template fornecido pela disciplina: estrutura de trabalho acadêmico com tabelas de posicionamento de problema e produto</li>
+        </ul>
+
+        <div style="background: #f0f8ff; border-radius: 10px; padding: 25px; margin-top: 30px; text-align: center;">
+            <h3 style="color: #0066cc;">Agradecimentos</h3>
+            <p style="font-size: 18px; margin-top: 15px;">
+                À Profa. <strong>Diana Braga</strong> pela orientação na disciplina<br>
+                e à <strong>JIT Technology</strong> pela parceria no estudo de caso
+            </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; color: #666;">
+            <p style="font-size: 16px;">
+                <strong>Equipe GoodSystem</strong><br>
+                Universidade Federal do Ceará - Campus Quixadá<br>
+                Semestre 2025.2
+            </p>
+        </div>
+    </div>
+    <div class="slide-number">10</div>
+</div>
+
+<script>
+    // Script para navegação entre slides (opcional - para visualização web)
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+            currentSlide++;
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+            currentSlide--;
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+
+    // Imprimir: Ctrl+P para gerar PDF
+    console.log('Use Ctrl+P ou Cmd+P para salvar como PDF');
+    console.log('Use as setas ← → para navegar entre slides');
+</script>
+
+</body>
+</html>
